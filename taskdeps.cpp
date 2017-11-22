@@ -51,6 +51,15 @@ public:
 
     rel(*this, setunion(deps) >= IntSet(IntArgs(1, 6)));
 
+    // Null tasks all towards the end
+
+    for (int i = 0; i < max_tasks - 1; i++) {
+      BoolVar currIsEmpty = expr(*this, (deps[i] == IntSet::empty));
+      BoolVar nextIsEmpty = expr(*this, (deps[i + 1] == IntSet::empty));
+
+      rel(*this, currIsEmpty >> nextIsEmpty);
+    }
+
     // Brancher
 
     branch(*this, deps, SET_VAR_NONE(), SET_VAL_MIN_INC());
