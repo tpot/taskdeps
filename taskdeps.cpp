@@ -47,6 +47,10 @@ public:
     precede(*this, deps, 1, 6); // [1, 5] -> [6]
     precede(*this, deps, 5, 6);
 
+    // We want to build target 6 so it must appear somewhere
+
+    rel(*this, setunion(deps) >= IntSet(IntArgs(1, 6)));
+
     // Brancher
 
     branch(*this, deps, SET_VAR_NONE(), SET_VAL_MIN_INC());
